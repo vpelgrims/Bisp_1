@@ -19,19 +19,26 @@ The code can be cloned from the repository
 git clone https://github.com/vpelgrims/bisp1.git /where/to/clone
 ```
 
-and you can install the python library
+and you can install the python library not (yet) using
 
 ```
 pip install /where/to/clone
 ```
 
-Use the -e option at install if you plan to make changes within ``BISP-1`` without having to reinstall at every changes.
+but in going to the folder /where/to/clone and running the command:
+```
+python -m pip install -e .
+```
+
+You may need sudo right.
+Use the -e option at install time if you plan to make changes to ``BISP-1`` without having to reinstall with each change. Otherwize, drop it. Don't forget the '.' at the end of the command, that is part of it.
+Running the above command will deploy ``BISP-1`` to your device and you can use the code from anywhere, not just the /where/to/clone folder.
 
 
 Background
 ==========
 
-The code uses the ``dynesty`` python nested sampler to analyze the polarization + distance data through a maximum-likelihood method. The polarization signal is decomposed in thin dust-polarizing layers placed along distance. Each layer is characterized by its distance (formally the parallax) as well as by its mean polarization (Stokes parameters q and u) and intrinstic scatter which accounts for turbulence.
+The code uses the [``dynesty``](https://dynesty.readthedocs.io/en/latest/index.html) Python nested sampler to analyze the polarization + distance data through a maximum-likelihood method. The polarization signal is decomposed in thin dust-polarizing layers placed along distance. Each layer is characterized by its distance (formally the parallax) as well as by its mean polarization (Stokes parameters q and u) and intrinstic scatter which accounts for turbulence.
 
 The model and the likelihood are fully determined in [our](https://arxiv.org/abs/2208.02278) paper.
 

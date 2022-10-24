@@ -55,6 +55,7 @@ class Stars(object):
         self.plx_max = np.max(starSample[2])
         self.qu_max = np.max([np.abs(starSample[0]),np.abs(starSample[1])])
         self.nStar = len(starSample[0])
+        self.NoLayerLL = Stars._get_NoLayerLL(starSample)
         #
     #
 
@@ -88,6 +89,26 @@ class Stars(object):
             the_array[5] = np.asarray(data_['c_qu'])
         #
         return the_array
+    
+    def _get_NoLayerLL(starSample):
+        '''
+            Compute the (log-)likelihood of the data given no dust layer,
+            i.e. assuming that the measured polarization are due to noise
+            only.
+        '''
+        stararray = starSample
+        qs = stararray[0]; us = stararray[1]
+        Cqq = stararray[3]**2 ; Cuu = stararray[4]**2 ; Cqu = stararray[5]
+        detC = Cqq * Cuu - Cqu**2
+        invCqq = Cuu / detC
+        invCuu = Cqq / detC
+        invCqu = - Cqu /detC
+        chi2 = qs**2 * invCqq + us**2 * invCuu + 2 * qs * us * invCqu
+        
+        ll_i = np.sum(np.log(np.exp(-.5*chi2)/(2*np.pi*np.sqrt(detC))))
+        return ll_i
+    
+
 
     #@classmethod
     def showData_QUMU(self,**kwargs):
@@ -1081,6 +1102,14 @@ class Bisp:
         '''
         testedModel = []
         sumStats = []
+        
+        # by default, consider NoLayer model
+        testedModel.append('NoLayer')
+        stats = [np.nan,np.nan,self.stars.NoLayerLL]
+        stats = np.concatenate((stats,[2*0 - 2* stats[2]]))
+        sumStats.append(stats)
+        #
+        #
         if hasattr(self,'OneLayer'):
             testedModel.append('OneLayer')
             stats = np.asarray(self.OneLayer.SummaryStat())

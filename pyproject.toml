@@ -22,9 +22,9 @@ classifiers = [
 ]
 keywords = ["scientific", "computing"]
 dependencies = [
-	"Astropy >= 4.0",
-	"dynesty >= 1.1",
-	"matplotlib >= 3.4.2",
+	"Astropy >= 4.3.1",
+	"dynesty >= 1.2.3",
+	"matplotlib >= 3.5.3",
 	"numpy >= 1.21.0",
 	"corner >= 2.2.1"
 ]

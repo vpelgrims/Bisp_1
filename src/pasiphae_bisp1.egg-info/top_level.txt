@@ -1,3 +1,0 @@
-BISP_1
-__init__
-bisp1_logll

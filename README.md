@@ -16,7 +16,7 @@ Install
 The code can be cloned from the repository
 
 ```
-git clone https://github.com/vpelgrims/bisp1.git /where/to/clone
+git clone git@github.com:vpelgrims/Bisp_1.git /where/to/clone
 ```
 
 and you can install the python library not (yet) using

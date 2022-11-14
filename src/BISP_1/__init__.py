@@ -5,13 +5,15 @@ from .Stars import *
 from .Decomp import *
 from .Priors import *
 
-import os.path
+from pathlib import Path
 
-here = os.path.dirname(__file__)
+
+path_to_here = Path(__file__).parent.absolute()
+path_to_tomlfile = path_to_here / ".." / ".." / "pyproject.toml"
 
 version = "unknown"
 
-with open(here+'/../../pyproject.toml') as fp:
+with open(path_to_tomlfile) as fp:
     for line in fp.read().splitlines():
         if line.startswith('version'):
             delim = '"' if '"' in line else "'"

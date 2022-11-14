@@ -19,10 +19,10 @@ The code can be cloned from the repository
 git clone git@github.com:vpelgrims/Bisp_1.git /where/to/clone
 ```
 
-and you can install the python library not (yet) using
+and you can install the python library **not (yet)** using
 
 ```
-pip install /where/to/clone
+pip install BISP-1
 ```
 
 but in going to the folder /where/to/clone and running the command:

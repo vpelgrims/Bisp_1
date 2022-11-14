@@ -43,6 +43,11 @@ The code uses the [``dynesty``](https://dynesty.readthedocs.io/en/latest/index.h
 The model and the likelihood are fully determined in [our](https://arxiv.org/abs/2208.02278) paper.
 
 
+Dependencies
+============
+``BISP-1`` depends on several libraries reported in the [pyproject.toml](https://github.com/vpelgrims/Bisp_1/blob/main/pyproject.toml) file. They will be installed at installation if requirements are not met. In addition to those reported there, and if not already installed, ``scipy`` will need to be installed too as ``dynesty`` relies on it at some point.
+
+
 Usage
 =====
 

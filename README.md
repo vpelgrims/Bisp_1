@@ -45,7 +45,7 @@ The model and the likelihood are fully determined in [our](https://arxiv.org/abs
 
 Dependencies
 ============
-``BISP-1`` depends on several libraries reported in the [pyproject.toml](https://github.com/vpelgrims/Bisp_1/blob/main/pyproject.toml) file. They will be installed at installation if requirements are not met. In addition to those reported there, and if not already installed, ``scipy`` will need to be installed too as ``dynesty`` relies on it at some point.
+``BISP-1`` depends on several libraries reported in the [pyproject.toml](https://github.com/vpelgrims/Bisp_1/blob/main/pyproject.toml) file. They will be installed at installation if requirements are not met. ``BISP-1`` does not explicitly rely on ``scipy`` but it calls utilities in ``dynesty`` that require it, so ``scipy`` is added as a requirement.
 
 
 Usage

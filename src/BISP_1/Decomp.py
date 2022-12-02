@@ -50,8 +50,12 @@ class Decomp:
         weights = np.exp(dyresults.logwt-dyresults.logl[-1])
         weights /= np.sum(weights)
         posteriors = dyfunc.resample_equal(samples,weights)
-        return posteriors[:samplerSize,:]
-    #
+        post_length = len(posteriors[:,0])
+        ind_select = np.random.choice(np.arange(post_length),\
+                                np.minimum(samplerSize,post_length),\
+                                    replace=False)
+        return posteriors[ind_select,:]
+
     def SummaryStat(self):
         '''
             Reads dyresults and returns evidence, error on evidence,
@@ -152,7 +156,7 @@ class Decomp:
         corner.corner(samples,smooth=1.,color='C0',\
                         labels=labels*Nclouds,\
                         label_kwargs={'fontsize':6,'usetex':True},\
-                        quantiles=[0.16,0.5,0.86],\
+                        quantiles=[0.16,0.5,0.84],\
                         show_titles=True,\
                         title_kwargs={'fontsize':6,'usetex':True},\
                         fig=f,labelpad=.04,plot_datapoints=False)

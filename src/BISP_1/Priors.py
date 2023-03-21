@@ -88,8 +88,8 @@ class ModelPriors:
     '''
     def __init__(self,modelName,types,values):
         if modelName == 'OneLayer':
-         self.layer_1 = LayerPriors(types[0],values[0])
-         self.nlayers = 1
+            self.layer_1 = LayerPriors(types[0],values[0])
+            self.nlayers = 1
         elif modelName == 'TwoLayers':
             self.layer_1 = LayerPriors(types[0],values[0])
             self.layer_2 = LayerPriors(types[1],values[1])
@@ -127,13 +127,13 @@ class ModelPriors:
         if self.nlayers>=1:
             ty_list = getTyp(ty_list,self.layer_1)
         if self.nlayers>=2:
-            ty_list = getTyp(ty_list,self.layer_1)
+            ty_list = getTyp(ty_list,self.layer_2)
         if self.nlayers>=3:
-            ty_list = getTyp(ty_list,self.layer_1)
+            ty_list = getTyp(ty_list,self.layer_3)
         if self.nlayers>=4:
-            ty_list = getTyp(ty_list,self.layer_1)
+            ty_list = getTyp(ty_list,self.layer_4)
         if self.nlayers>=5:
-            ty_list = getTyp(ty_list,self.layer_1)
+            ty_list = getTyp(ty_list,self.layer_5)
         #
         return ty_list
 
@@ -287,6 +287,7 @@ class Priors:
                     raise ('Invalid size of priorType inputs')
         if inputValues is not None:
             for mm in range(len(inputValues)):
+                n = len(inputValues[mm])
                 if n == 1:
                     types = self.OneLayer.getTypeList()
                     self.OneLayer = ModelPriors('OneLayer',types,\

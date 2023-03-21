@@ -110,7 +110,7 @@ def def_prior_IntSc(u,PriorType,ParamList,StarData):
             if PriorType[nn][pp] == 'Gauss':
                 # special care for the parallax
                 if (pp == 0 and \
-                    (ParamList[nn][pp] <= ParamList[nn][pp+3])):
+                    (ParamList[nn][pp] <= ParamList[nn][pp+6])):
                     message = ('the mean is <= than the stddev while it',\
                                 'cannot be negative. You should not do that.',\
                                     'Aborded.')
@@ -130,10 +130,17 @@ def def_prior_IntSc(u,PriorType,ParamList,StarData):
                     p[6*nn+pp] = 2 * v_crit * u[6*nn+pp] - v_crit
                 #
                 if ((nn >= 1) and (pp == 0)):
-                    v_crit = np.minimum(np.sort(StarData[2][StarData[2]<p[6*(nn-1)+pp]])[-5],\
-                                        ParamList[nn][pp])
-                    p[6*nn+pp] = (ParamList[nn][pp+6]-v_crit)*\
-                                u[6*nn+pp] + v_crit
+                    if PriorType[nn-1][pp] == 'Flat':
+                        v_crit = np.minimum(np.sort(StarData[2][StarData[2]<p[6*(nn-1)+pp]])[-5],\
+                                            ParamList[nn][pp])
+                        p[6*nn+pp] = (ParamList[nn][pp+6]-v_crit)*\
+                                    u[6*nn+pp] + v_crit
+                    else:
+                        v_crit = ParamList[nn-1][pp]-2*ParamList[nn-1][pp+6]
+                        p[6*nn+pp] = (ParamList[nn][pp+6]-v_crit)*\
+                                    u[6*nn+pp] + v_crit
+                        #p[6*nn+pp] = (ParamList[nn][pp+6]-ParamList[nn][pp])*\
+                        #            u[6*nn+pp] + ParamList[nn][pp]
                 #
             else:
                 raise ValueError('oups: Wrong PriorType')
@@ -270,6 +277,8 @@ def logLL_TwoLayers(theta,star_plx,star_q,star_u,err_plx,err_q,err_u,c_qu):
             (C2int_qu**2 >= C2int_qq * C2int_uu)):
                 #or (np.sum((star_plx<plx1)*(star_plx>plx2))<5.)):
         return -np.inf
+    if (plx1<=plx2):
+        return -np.inf
     #
     #
     q_m_b = 0*star_q
@@ -398,6 +407,8 @@ def logLL_ThreeLayers(theta,star_plx,star_q,star_u,err_plx,err_q,err_u,c_qu):
                 (C3int_qu**2 >= C3int_qq * C3int_uu)): # or
                     #(np.sum((star_plx<plx1)*(star_plx>plx2))<5.) or
                     #    (np.sum((star_plx<plx2)*(star_plx>plx3))<5.)):
+        return -np.inf
+    if ((plx1<=plx2) or (plx2<=plx3)):
         return -np.inf
     #
     #
@@ -554,6 +565,8 @@ def logLL_FourLayers(theta,star_plx,star_q,star_u,err_plx,err_q,err_u,c_qu):
             (C2int_qu**2 >= C2int_qq * C2int_uu) or
                 (C3int_qu**2 >= C3int_qq * C3int_uu) or
                     (C4int_qu**2 >= C4int_qq * C4int_uu)):
+        return -np.inf
+    if ((plx1<=plx2) or (plx2<=plx3) or (plx3<=plx4)):
         return -np.inf
     #
     #
@@ -734,6 +747,8 @@ def logLL_FiveLayers(theta,star_plx,star_q,star_u,err_plx,err_q,err_u,c_qu):
                 (C3int_qu**2 >= C3int_qq * C3int_uu) or
                     (C4int_qu**2 >= C4int_qq * C4int_uu) or
                         (C5int_qu**2 >= C5int_qq * C5int_uu)):
+        return -np.inf
+    if ((plx1<=plx2) or (plx2<=plx3) or (plx3<=plx4) or (plx4<=plx5)):
         return -np.inf
     #
     #
